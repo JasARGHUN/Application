@@ -1,0 +1,114 @@
+﻿@model InfoEditViewModel
+
+@{
+    ViewBag.Title = "Редактировать приложение";
+    Layout = "_AdminLayout";
+}
+
+<div class="card border m-2">
+    <form asp-controller="Admin" asp-action="EditInfo" method="post" enctype="multipart/form-data">
+
+        <input hidden asp-for="Id" />
+        <input hidden asp-for="ExistingImagePath" />
+        <input hidden asp-for="ExistingSocialImagePath" />
+        <input hidden asp-for="ExistingBackgroundImagePath" />
+
+        <div class="card m-2 p-3">
+
+            <div class="form-group row m-1">
+                <h5><label>Название приложения:</label></h5>
+                <input asp-for="AppName" class="form-control" placeholder="Application name..." />
+                <span asp-validation-for="AppName" class="text-danger"></span>
+            </div>
+            <hr />
+
+            <div class="form-group row m-1">
+                <h5><label>Логотип приложения:</label></h5>
+                <div class="custom-file">
+                    <input multiple asp-for="AppImages" class="form-control custom-file-input" />
+                    <label class="custom-file-label">Click here to chage photo...</label>
+                </div>
+            </div>
+            <hr />
+
+            <div class="card p-2">
+                <div class="form-group row m-1">
+
+                    <div class="mt-2"><h5><label>Заднии фон приложения:</label></h5></div>
+                    <div class="custom-file">
+                        <input multiple asp-for="AppBackgroundImages" class="form-control custom-file-input" />
+                        <label class="custom-file-label">Click here to chage background...</label>
+                    </div>
+
+                    <div class="mt-2"><h5><label>Изображения социальной ссылки:</label></h5></div>
+                    <div class="custom-file">
+                        <input multiple asp-for="AppSocialImgs" class="form-control custom-file-input" />
+                        <label class="custom-file-label">Click here to chage image...</label>
+                    </div>
+
+                    <div class="mt-2">
+                        <h5><label>URL-адрес соц.сети:</label></h5>
+                        <input asp-for="AppSocialAddress" class="form-control" placeholder="https://twitter.com/" />
+                        <span asp-validation-for="AppSocialAddress" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <hr />
+
+            <div class="form-group row m-1">
+                <h5><label>Адрес предприятия:</label></h5>
+                <input asp-for="AppAddress" class="form-control" placeholder="Ваш адрес..." />
+                <span asp-validation-for="AppAddress" class="text-danger"></span>
+            </div>
+            <hr />
+
+            <div class="form-group row m-1">
+                <h5><label>Ваш емейл адрес:</label></h5>
+                <input asp-for="AppEmail" class="form-control" placeholder="Ваш емейл адрес..." />
+                <span asp-validation-for="AppEmail" class="text-danger"></span>
+            </div>
+            <hr />
+
+            <div class="form-group row m-1">
+                <h5><label>Первый телефонный номер:</label></h5>
+                <input asp-for="AppPhone1" class="form-control" placeholder="Телефонный номер 1..." />
+                <span asp-validation-for="AppPhone1" class="text-danger"></span>
+            </div>
+            <hr />
+
+            <div class="form-group row m-1">
+                <h5><label>Второй телефонный номер:</label></h5>
+                <input asp-for="AppPhone2" class="form-control" placeholder="Телефонный номер 2..." />
+                <span asp-validation-for="AppPhone2" class="text-danger"></span>
+            </div>
+            <hr />
+
+        </div>
+
+        <div class="form-group row m-1">
+            <div class="col-sm-10">
+                <button type="submit" class="btn btn-success">Применить</button>
+                <a asp-controller="Admin" asp-action="EditInfo"></a>
+                <a asp-action="Index" class="btn btn-secondary">Назад</a>
+            </div>
+        </div>
+
+        @section Scripts{
+            <script>
+                $(document).ready(function () {
+                    $('.custom-file-input').on("change", function () {
+                        var fileLabel = $(this).next('.custom-file-label');
+                        var files = $(this)[0].files;
+                        if (files.length > 1) {
+                            fileLabel.html(files.length + ' files selected');
+                        }
+                        else if (files.length == 1) {
+                            fileLabel.html(files[0].name);
+                        }
+                    });
+                });
+            </script>
+        }
+
+    </form>
+</div>

@@ -1,0 +1,49 @@
+﻿@model Order
+
+<h2>Оформить заказ</h2>
+<p>Пожалуйста, введите ваши данные, и мы отправим ваш заказ прямо сейчас!</p>
+
+<div class="card border-0" style="min-height:100vh;">
+    <form asp-action="Checkout" method="post">
+        <h3>
+            Ваши данные
+        </h3>
+        <div class="form-group">
+            <label>Ваше имя:</label>
+            <div><span asp-validation-for="Name" class="text-danger"></span></div>
+            <input asp-for="Name" class="form-control" />
+        </div>
+        <h3>Адрес</h3>
+        <div class="form-group">
+            <label>Адрес:</label>
+            <div><span asp-validation-for="Line1" class="text-danger"></span></div>
+            <input asp-for="Line1" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Почтовый адрес:</label>
+            <div><span asp-validation-for="Email" class="text-danger"></span></div>
+            <input asp-for="Email" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Город:</label>
+            <div><span asp-validation-for="City" class="text-danger"></span></div>
+            <input asp-for="City" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Телефонный номер:</label>
+            <div><span asp-validation-for="Phone" class="text-danger"></span></div>
+            <input asp-for="Phone" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Почтовый индекс:</label>
+            <div><span asp-validation-for="Zip" class="text-danger"></span></div>
+            <input asp-for="Zip" class="form-control" />
+        </div>
+        <br />
+        <div class="text-center">
+            <hr />
+            <a class="btn btn-primary" asp-action="Index" asp-controller="Cart">Вернуться к корзине</a>
+            <input class="btn btn-success" type="submit" value="Завершить покупку" />
+        </div>
+    </form>
+</div>

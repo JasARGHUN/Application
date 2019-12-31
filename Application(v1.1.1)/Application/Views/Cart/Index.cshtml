@@ -1,0 +1,50 @@
+﻿@model CartIndexViewModel
+
+@{
+    ViewBag.Title = "Cart";
+}
+
+<div class="card m-1 border-0" style="min-height:100vh;">
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th class="text-center">Количество:</th>
+                <th class="text-center">Продукт:</th>
+                <th class="text-center">Цена за единицу:</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var line in Model.Cart.Lines)
+            {
+                <tr>
+                    <td class="text-center"><h5>@line.Quantity</h5></td>
+                    <td class="text-center">@line.Product.Name</td>
+                    <td class="text-center">@line.Product.Price.ToString("c")</td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <form class="mt-1" style="float:right" asp-action="RemoveFromCart" method="post">
+                            <input type="hidden" name="ProductID"
+                                   value="@line.Product.ProductID" />
+                            <input type="hidden" name="returnUrl"
+                                   value="@Model.ReturnUrl" />
+                            <button type="submit" class="btn btn-sm btn-danger">
+                                Очистить
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="card-footer mb-1">
+        <h4 colspan="3" class="text-right">Итоговая сумма:</h4>
+        <h4 class="text-right">@Model.Cart.ComputeTotalValue().ToString("c")</h4>
+    </div>
+
+    <div class="text-center p-1">
+        <a class="btn btn-primary" asp-action="List" asp-controller="Product">Продолжить покупки</a>
+        <a class="btn btn-success" asp-action="Checkout" asp-controller="Order">Оформить заказ</a>
+    </div>
+
+</div>

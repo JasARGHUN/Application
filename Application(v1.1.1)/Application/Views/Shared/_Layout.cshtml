@@ -1,0 +1,122 @@
+﻿<!DOCTYPE html>
+<html>
+@*Отображает все элементы на главной странице*@
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet"
+          asp-href-include="/lib/bootstrap/dist/**/*.min.css"
+          asp-href-exclude="**/*-reboot*,**/*-grid*" />
+
+    <script src="https://cdn.jsdelivr.net/npm/baffle@0.3.6/dist/baffle.min.js"></script>
+    @*<script src="~/js/blotter.min.js"></script> Эффект жидкого текста
+        <script src="~/js/liquidDistortMaterial.js"></script>*@
+    <link href="~/css/site.css" rel="stylesheet" />
+    <link rel="stylesheet" asp-href-include="/lib/fontawesome/css/*.css" />
+
+    @*Блок с названием приложения. Views/Shared/Components/*@
+    <title>@await Component.InvokeAsync("AppName")</title>
+</head>
+
+@*Блок с панелем пойска и пагинации находится в Views/Product/List.cshtml*@
+
+<body style="@await Component.InvokeAsync("InfoBackground")"> @*Изображение заднего фона. Views/Shared/Components/*@
+    <div class="navbar border" role="navigation" style="background-color: white">
+        <a class="col navbar-brand row text-left" asp-action="List" asp-controller="Product">
+            <div class="custom-control-inline mt-2">
+
+                @*Блок с логотипом приложения. Views/Shared/Components/*@
+                <div>@await Component.InvokeAsync("InfoLogo")</div>
+
+                @*Блок с названием приложения. Views/Shared/Components/*@
+                <div>@await Component.InvokeAsync("Info")</div>
+            </div>
+        </a>
+
+        @*Блок с корзиной покупок. Views/Shared/Components/*@
+        <div class="col-2 text-right">
+            @await Component.InvokeAsync("CartSummary")
+        </div>
+
+    </div>
+
+    <div class="row m-1 p-1">
+
+        @*Меню с категориями. Views/Shared/Components/*@
+        <div id="categories" class="col-3">
+            @await Component.InvokeAsync("NavigationMenu")
+        </div>
+
+        @*Объекты Product*@
+        <div class="col-9">
+            @RenderBody()
+        </div>
+    </div>
+
+
+    <footer class="border-top footer text-muted form-inline" style="background-color: white">
+        <div class="container">
+
+            @*Кнопоки Адрес и Контакты. Views/Shared/Components/*@
+            <button class="btn btn-outline-secondary m-1" data-toggle="popover" data-trigger="hover" data-placement="top" data-content="@await Component.InvokeAsync("InfoAddress")">
+                Адрес
+            </button>
+            <button class="btn btn-outline-secondary m-1" data-toggle="popover" data-trigger="hover" data-placement="top" title="@await Component.InvokeAsync("InfoPhone")" data-content="@await Component.InvokeAsync("InfoPhoneSecond")">
+                Контакты
+            </button>
+
+            @*блок с изображением социальной ссылки. Views/Shared/Components/*@
+            @await Component.InvokeAsync("InfoSocialImg")
+            <span class="badge float-right mt-3" style="font-weight:bold; font-size: 120%;">@await Component.InvokeAsync("AppEmail")</span>
+        </div>
+    </footer>
+
+    @*Блок с 2GIS*@
+    <div class="card-footer text-center">
+        <div id="map" style="width:100%; height:300px"></div>
+    </div>
+
+    @if (IsSectionDefined("Scripts"))
+    {
+        @RenderSection("Scripts", required: true)
+    }
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://maps.api.2gis.ru/2.0/loader.js?pkg=full"></script>
+    <script src="~/js/bundle.js" asp-append-version="true"></script>
+
+    <script type="text/javascript">
+
+        //скрипты для кнопок Адрес и Контакты
+        $(document).ready(function () {
+            $('[data-toggle="popover"]').popover();
+        });
+
+        //скрипты с 2GIS
+        var map;
+        DG.then(function () {
+            map = DG.map('map', {
+                center: [49.79, 73.09],
+                zoom: 16
+            });
+            DG.marker([49.79, 73.09]).addTo(map).bindPopup('Адрес Вашего помещения/здания');
+
+            //Отображает местоположение клиента - включать по усмотрению.
+            //map.locate({setView: true, watch: true})
+            //        .on('locationfound', function(e) {
+            //            DG.marker([e.latitude, e.longitude]).addTo(map);
+            //        })
+            //        .on('locationerror', function(e) {
+            //            DG.popup()
+            //              .setLatLng(map.getCenter())
+            //              .setContent('Доступ к определению местоположения отключён')
+            //              .openOn(map);
+            //        });
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,35 @@
+﻿@model Info
+
+<H4 style="color:black" id="main" class="data mt-1">
+    @Model.AppName
+</H4>
+
+
+
+<script type="text/javascript">
+    const text = baffle(".data");
+    text.set({
+        characters: '█▓▒ ▒▓░█▓▒█ ▓▒▓░▒░█▒░▒█▓▒▓░▓░',
+        speed: 120
+    });
+    text.start();
+    text.reveal(1500); /*скорость анимации*/
+</script>
+
+
+@*<script> LIQUID TEXT EFFECT
+        container = document.getElementById("main");
+        const text = new Blotter.Text("@Model.AppName", {
+            family: "serif",
+            size: 25
+        });
+        let material = new Blotter.LiquidDistortMaterial();
+        material.uniforms.uSpeed.value = 0.1;
+        material.uniforms.uVolatility.value = 0.05;
+        material.uniforms.uSeed.value = 0.05;
+        let blotter = new Blotter(material, {
+            texts: text
+        });
+        let scope = blotter.forText(text);
+        scope.appendTo(container);
+    </script>*@

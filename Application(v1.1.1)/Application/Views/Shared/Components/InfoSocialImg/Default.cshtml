@@ -1,0 +1,8 @@
+﻿@model Info
+
+@{
+    var photoPath = "~/images/" + (Model.AppSocialImg ?? "shop-icon-png.jpg");
+}
+<a class="m-1 borderRadius" href="@Model.AppSocialAddress" target="_blank">
+    <img class="borderRadius border border-dark" src="@photoPath" height="40" width="40" asp-append-version="true" />
+</a>

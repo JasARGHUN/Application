@@ -1,0 +1,68 @@
+﻿@*@model IEnumerable<Product>*@
+@model ReflectionIT.Mvc.Paging.PagingList<Application.Models.Product>
+@using ReflectionIT.Mvc.Paging
+@{
+    ViewBag.Title = "Панель администратора";
+    Layout = "_AdminLayout";
+}
+
+<div class="card border p-2">
+    <h3>Все объекты в базе данных:</h3>
+    <hr />
+    <form method="get" class="form-inline m-1">
+        <input name="filter" class="form-control m-1" placeholder="Введите название объекта..."
+               value="@Model.RouteValue["Filter"]" />
+        <button type="submit" class="btn btn-info m-1">
+            <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Пойск
+        </button>
+    </form>
+    <hr />
+    <table class="table table-striped table-bordered table-sm">
+        <tr>
+            <th class="text-left">@Html.SortableHeaderFor(model => model.ProductID)</th>
+            <th>@Html.SortableHeaderFor(model => model.Name)</th>
+            <th>@Html.SortableHeaderFor(model => model.Category)</th>
+            <th class="text-right">@Html.SortableHeaderFor(model => model.Price)</th>
+            <th class="text-center">Actions</th>
+        </tr>
+        @foreach (var i in Model)
+        {
+            <tr>
+                <td class="text-left">@i.ProductID</td>
+                <td>@i.Name</td>
+                <td>@i.Category</td>
+                <td class="text-right">@i.Price</td>
+                <td class="text-center">
+                    <form asp-action="Delete" method="post">
+                        <a asp-action="Edit" class="btn btn-sm btn-warning"
+                           asp-route-productId="@i.ProductID">Редактировать</a>
+                        <input type="hidden" name="ProductID" value="@i.ProductID" />
+                        <button type="submit" class="btn btn-danger btn-sm">
+                            Удалить
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </table>
+    <hr />
+    <div class="text-center mb-1 p-2">
+        <a asp-action="Create" class="btn btn-primary btn-sm mt-1" target="_blank">Добавить объекты</a>
+
+        @*<a asp-action="CreateInfo" class="btn btn-warning">Create application data</a>*@
+
+        <a asp-action="EditInfo" class="btn btn-warning btn-sm mt-1" target="_blank">Редактировать приложение</a>
+
+        <a asp-controller="Order" asp-action="Index" class="btn btn-primary btn-sm mt-1" target="_blank">Заказы</a>
+        <a asp-controller="Order" asp-action="ViewDataBase" class="btn btn-warning btn-sm mt-1" target="_blank">База данных: Заказы</a>
+
+        <a asp-controller="Product" asp-action="List" class="btn btn-secondary btn-sm mt-1" target="_blank">В магазин</a>
+    </div>
+</div>
+<div class="m-2">
+    @*Pagination*@
+    <nav style="float:left" aria-label="Products Paging">
+        <h5>@await this.Component.InvokeAsync("Pager", new { pagingList = this.Model })</h5>
+        <hr />
+    </nav>
+</div>

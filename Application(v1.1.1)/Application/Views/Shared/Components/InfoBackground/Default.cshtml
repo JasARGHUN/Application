@@ -1,0 +1,8 @@
+﻿@model Info
+
+@{
+    var photoPath = "~/images/" + (Model.AppBackgroundImage);
+}
+
+background: url('@Url.Content(photoPath)'); background-size: cover; background-repeat: no-repeat; background-attachment: fixed; background-position: center;
+@*style="background: url('@Url.Content(photoPath)'); background-repeat: no-repeat; background-attachment: fixed; background-position: center;"*@

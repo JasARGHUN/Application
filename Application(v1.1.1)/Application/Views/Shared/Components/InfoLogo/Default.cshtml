@@ -1,0 +1,7 @@
+﻿@model Info
+
+@{
+    var photoPath = "~/images/" + (Model.AppImage ?? "shopIcon.jpg");
+}
+
+<img class="mr-2" style="float:left; border-radius: 50px;" src="@photoPath" height="40" width="40" asp-append-version="true" alt="" />
